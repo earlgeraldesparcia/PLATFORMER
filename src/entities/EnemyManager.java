@@ -10,6 +10,7 @@ import utilz.LoadSave;
 import static utilz.Constants.EnemyConstants.*;
 
 public class EnemyManager {
+	private int playerBasicAttackDamage = 10000;
 
 	private Playing playing;
 	private BufferedImage[][] crabbyArr, pinkstarArr, sharkArr, shroombieArr, bossArr;
@@ -128,7 +129,7 @@ public class EnemyManager {
 			if (c.isActive())
 				if (c.getState() != DEAD && c.getState() != HIT)
 					if (attackBox.intersects(c.getHitbox())) {
-						c.hurt(20);
+						c.hurt(playerBasicAttackDamage);
 						return;
 					}
 
@@ -139,7 +140,7 @@ public class EnemyManager {
 				else {
 					if (p.getState() != DEAD && p.getState() != HIT)
 						if (attackBox.intersects(p.getHitbox())) {
-							p.hurt(20);
+							p.hurt(playerBasicAttackDamage);
 							return;
 						}
 				}
@@ -149,7 +150,7 @@ public class EnemyManager {
 			if (s.isActive()) {
 				if (s.getState() != DEAD && s.getState() != HIT)
 					if (attackBox.intersects(s.getHitbox())) {
-						s.hurt(20);
+						s.hurt(playerBasicAttackDamage);
 						return;
 					}
 			}
@@ -158,7 +159,7 @@ public class EnemyManager {
 			if (sh.isActive()) {
 				if (sh.getState() != DEAD && sh.getState() != HIT)
 					if (attackBox.intersects(sh.getHitbox())) {
-						sh.hurt(20);
+						sh.hurt(playerBasicAttackDamage);
 						return;
 					}
 			}
@@ -167,7 +168,7 @@ public class EnemyManager {
 			if (b.isActive()) {
 				if (b.getState() != DEAD && b.getState() != HIT)
 					if (attackBox.intersects(b.getHitbox())) {
-						b.hurt(20);
+						b.hurt(playerBasicAttackDamage);
 						return;
 					}
 			}

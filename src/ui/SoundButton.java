@@ -47,7 +47,7 @@ public class SoundButton extends PauseButton {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(soundImgs[rowIndex][colIndex], x, y, width, height, null);
+		g.drawImage(soundImgs[rowIndex][colIndex], x, y-25, width-20, height-20, null);
 	}
 
 	public boolean isMouseOver() {

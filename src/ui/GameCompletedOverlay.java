@@ -23,8 +23,8 @@ public class GameCompletedOverlay {
 	}
 
 	private void createButtons() {
-		quit = new MenuButton(Game.GAME_WIDTH / 2, (int) (270 * Game.SCALE), 2, Gamestate.MENU);
-		credit = new MenuButton(Game.GAME_WIDTH / 2, (int) (200 * Game.SCALE), 3, Gamestate.CREDITS);
+		quit = new MenuButton(Game.GAME_WIDTH / 2, (int) (270 * Game.SCALE) - 60, 2, Gamestate.MENU);
+		credit = new MenuButton(Game.GAME_WIDTH / 2, (int) (200 * Game.SCALE) - 40, 3, Gamestate.CREDITS);
 	}
 
 	private void createImg() {

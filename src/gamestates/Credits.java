@@ -52,7 +52,7 @@ public class Credits extends State implements Statemethods {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		g.drawImage(creditsImg, bgX, (int) (bgY + bgYFloat), bgW, bgH, null);
+		g.drawImage(creditsImg, bgX + 400, (int) (bgY + bgYFloat), bgW, bgH, null);
 
 		for (ShowEntity se : entitiesList)
 			se.draw(g);

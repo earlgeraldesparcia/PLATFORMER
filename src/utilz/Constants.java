@@ -319,6 +319,8 @@ public class Constants {
 	}
 
 	public static class PlayerConstants {
+		public static final int PLAYER_BASIC_ATTACK_DAMAGE = 10000;
+		
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
 		public static final int JUMP = 2;
@@ -332,15 +334,17 @@ public class Constants {
 			case DEAD:
 				return 8;
 			case RUNNING:
-				return 6;
+				return 8;
 			case IDLE:
 				return 5;
 			case HIT:
 				return 4;
 			case JUMP:
+				return 4;
 			case ATTACK:
 				return 3;
 			case FALLING:
+				return 4;
 			default:
 				return 1;
 			}

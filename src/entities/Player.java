@@ -16,13 +16,16 @@ import main.Game;
 import utilz.LoadSave;
 
 public class Player extends Entity {
+	private int basicAttackDamage = 10000;
+	
+	public int getBasicAttackDamage() { return this.basicAttackDamage; }
 
 	private BufferedImage[][] animations;
 	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int[][] lvlData;
 	private float xDrawOffset = 21 * Game.SCALE;
-	private float yDrawOffset = 4 * Game.SCALE;
+	private float yDrawOffset = 11 * Game.SCALE;
 
 	// Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
@@ -421,7 +424,7 @@ public class Player extends Entity {
 		animations = new BufferedImage[7][8];
 		for (int j = 0; j < animations.length; j++)
 			for (int i = 0; i < animations[j].length; i++)
-				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+				animations[j][i] = img.getSubimage(i * 80, j * 64, 80, 64);
 
 		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.STATUS_BAR);
 	}

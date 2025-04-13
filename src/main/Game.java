@@ -8,6 +8,7 @@ import gamestates.GameOptions;
 import gamestates.Gamestate;
 import gamestates.Menu;
 import gamestates.Playing;
+import gamestates.WorldOneStory;
 import ui.AudioOptions;
 
 public class Game implements Runnable {
@@ -23,6 +24,7 @@ public class Game implements Runnable {
 	private GameOptions gameOptions;
 	private AudioOptions audioOptions;
 	private AudioPlayer audioPlayer;
+	private WorldOneStory worldOneStory;
 
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 2f;
@@ -50,6 +52,7 @@ public class Game implements Runnable {
 		playing = new Playing(this);
 		credits = new Credits(this);
 		gameOptions = new GameOptions(this);
+		worldOneStory = new WorldOneStory(this);
 	}
 
 	private void startGameLoop() {
@@ -64,6 +67,7 @@ public class Game implements Runnable {
 		case OPTIONS -> gameOptions.update();
 		case CREDITS -> credits.update();
 		case QUIT -> System.exit(0);
+		case WORLD1_STORY -> worldOneStory.update();
 		}
 	}
 
@@ -74,6 +78,7 @@ public class Game implements Runnable {
 		case PLAYING -> playing.draw(g);
 		case OPTIONS -> gameOptions.draw(g);
 		case CREDITS -> credits.draw(g);
+		case WORLD1_STORY -> worldOneStory.draw(g);
 		}
 	}
 

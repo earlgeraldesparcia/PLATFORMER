@@ -244,7 +244,7 @@ public class Playing extends State implements Statemethods {
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 
-		drawClouds(g);
+//		drawClouds(g);
 		if (drawRain)
 			rain.draw(g, xLvlOffset);
 
