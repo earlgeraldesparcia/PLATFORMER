@@ -8,6 +8,8 @@ import main.Game;
 import utilz.LoadSave;
 
 public class LevelManager {
+	
+	public static int levelNumber = 1;
 
 	private Game game;
 	private BufferedImage[] levelSprite;
@@ -37,6 +39,8 @@ public class LevelManager {
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
+		levelNumber++;
+		System.out.println(levelNumber);
 	}
 
 	private void buildAllLevels() {

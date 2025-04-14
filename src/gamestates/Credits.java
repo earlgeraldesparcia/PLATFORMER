@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import main.Game;
 import utilz.LoadSave;
+import utilz.Constants.EnemyConstants;
 
 public class Credits extends State implements Statemethods {
 	private BufferedImage backgroundImg, creditsImg;
@@ -29,7 +30,7 @@ public class Credits extends State implements Statemethods {
 
 	private void loadEntities() {
 		entitiesList = new ArrayList<>();
-		entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS), 5, 64, 40), (int) (Game.GAME_WIDTH * 0.05), (int) (Game.GAME_HEIGHT * 0.8)));
+		entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS), 5, EnemyConstants.CRABBY_WIDTH, EnemyConstants.CRABBY_HEIGHT), (int) (Game.GAME_WIDTH * 0.05), (int) (Game.GAME_HEIGHT * 0.8)));
 		entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.CRABBY_SPRITE), 5, 72, 32), (int) (Game.GAME_WIDTH * 0.15), (int) (Game.GAME_HEIGHT * 0.75)));
 		entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.PINKSTAR_ATLAS), 8, 34, 30), (int) (Game.GAME_WIDTH * 0.7), (int) (Game.GAME_HEIGHT * 0.75)));
 		entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.SHARK_ATLAS), 8, 34, 30), (int) (Game.GAME_WIDTH * 0.8), (int) (Game.GAME_HEIGHT * 0.8)));
@@ -54,8 +55,8 @@ public class Credits extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		g.drawImage(creditsImg, bgX + 400, (int) (bgY + bgYFloat), bgW, bgH, null);
 
-		for (ShowEntity se : entitiesList)
-			se.draw(g);
+//		for (ShowEntity se : entitiesList)
+//			se.draw(g);
 	}
 
 	@Override

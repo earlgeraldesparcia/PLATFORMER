@@ -18,6 +18,7 @@ import ui.GameCompletedOverlay;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
+import ui.WorldOneStory;
 import utilz.LoadSave;
 import effects.DialogueEffect;
 import effects.Rain;
@@ -36,7 +37,10 @@ public class Playing extends State implements Statemethods {
 	private GameCompletedOverlay gameCompletedOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private Rain rain;
+	
+	private WorldOneStory worldOneStory;
 
+	private boolean showStory1 = true;//
 	private boolean paused = false;
 
 	private int xLvlOffset;
@@ -74,8 +78,8 @@ public class Playing extends State implements Statemethods {
 	public Playing(Game game) {
 		super(game);
 		initClasses();
-
-		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG);
+		
+		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG1);
 		bigCloud = LoadSave.GetSpriteAtlas(LoadSave.BIG_CLOUDS);
 		smallCloud = LoadSave.GetSpriteAtlas(LoadSave.SMALL_CLOUDS);
 		smallCloudsPos = new int[8];
@@ -128,6 +132,7 @@ public class Playing extends State implements Statemethods {
 		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
 		resetAll();
 		drawShip = false;
+		nextBackgroundImage();
 	}
 
 	private void loadStartLevel() {
@@ -152,22 +157,34 @@ public class Playing extends State implements Statemethods {
 		gameOverOverlay = new GameOverOverlay(this);
 		levelCompletedOverlay = new LevelCompletedOverlay(this);
 		gameCompletedOverlay = new GameCompletedOverlay(this);
+		
+		worldOneStory = new WorldOneStory(this);
 
 		rain = new Rain();
 	}
 
 	@Override
 	public void update() {
-		if (paused)
+		
+		if (paused) {
 			pauseOverlay.update();
-		else if (lvlCompleted)
+		}
+		else if (lvlCompleted) {
 			levelCompletedOverlay.update();
-		else if (gameCompleted)
+		}
+		else if (gameCompleted) {
 			gameCompletedOverlay.update();
-		else if (gameOver)
+		}
+		else if (gameOver) {
 			gameOverOverlay.update();
-		else if (playerDying)
+		}
+		else if (playerDying) {
 			player.update();
+		}
+		else if(showStory1) {
+			worldOneStory.update();
+		}
+		
 		else {
 			updateDialogue();
 			if (drawRain)
@@ -180,6 +197,17 @@ public class Playing extends State implements Statemethods {
 			if (drawShip)
 				updateShipAni();
 		}
+	}
+
+	private void nextBackgroundImage() {
+		if(LevelManager.levelNumber == 1) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG1);
+		}else if(LevelManager.levelNumber == 2) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG2);
+		}else if(LevelManager.levelNumber == 3) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG3);
+		}
+		
 	}
 
 	private void updateShipAni() {
@@ -268,6 +296,10 @@ public class Playing extends State implements Statemethods {
 			levelCompletedOverlay.draw(g);
 		else if (gameCompleted)
 			gameCompletedOverlay.draw(g);
+		
+		else if(showStory1) {
+			worldOneStory.draw(g);
+		}
 
 	}
 
@@ -359,6 +391,9 @@ public class Playing extends State implements Statemethods {
 				break;
 			case KeyEvent.VK_K:
 				player.powerAttack();
+				break;
+			case KeyEvent.VK_ENTER:
+				worldOneStory.enterPressed();;
 				break;
 			}
 	}
@@ -471,5 +506,9 @@ public class Playing extends State implements Statemethods {
 
 	public void setPlayerDying(boolean playerDying) {
 		this.playerDying = playerDying;
+	}
+	
+	public void showStory(boolean value) {
+		showStory1 = value;
 	}
 }

@@ -1,34 +1,32 @@
 package entities;
 
-import static utilz.Constants.Dialogue.*;
-import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.EnemyConstants.*;
-import static utilz.HelpMethods.CanMoveHere;
 import static utilz.HelpMethods.IsFloor;
+import static utilz.Constants.Dialogue.*;
 
 import gamestates.Playing;
 
-public class Shark extends Enemy {
+public class Duwende extends Enemy {
 
-	public Shark(float x, float y) {
-		super(x, y, SHARK_WIDTH, SHARK_HEIGHT, SHARK);
-		initHitbox(18, 22);
-		initAttackBox(35, 22, 0);
+	public Duwende(float x, float y) {
+		super(x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
+		initHitbox(18, 19);
+		initAttackBox(CRABBY_WIDTH/2, 19, 0);
 	}
 
 	public void update(int[][] lvlData, Playing playing) {
 		updateBehavior(lvlData, playing);
 		updateAnimationTick();
-		updateAttackBoxFlip();
+		updateAttackBox();
 	}
 
 	private void updateBehavior(int[][] lvlData, Playing playing) {
 		if (firstUpdate)
 			firstUpdateCheck(lvlData);
 
-		if (inAir)
+		if (inAir) {
 			inAirChecks(lvlData, playing);
-		else {
+		} else {
 			switch (state) {
 			case IDLE:
 				if (IsFloor(hitbox, lvlData))
@@ -42,20 +40,19 @@ public class Shark extends Enemy {
 					if (isPlayerCloseForAttack(playing.getPlayer()))
 						newState(ATTACK);
 				}
-
 				move(lvlData);
+
+				if (inAir)
+					playing.addDialogue((int) hitbox.x, (int) hitbox.y, EXCLAMATION);
+
 				break;
 			case ATTACK:
 				if (aniIndex == 0)
 					attackChecked = false;
-				else if (aniIndex == 2) {
-					if (!attackChecked)
-						checkPlayerHit(attackBox, playing.getPlayer());
-					attackMove(lvlData, playing);
-				}
-
+				if (aniIndex == 3 && !attackChecked)
+					checkPlayerHit(attackBox, playing.getPlayer());
 				break;
-	 		case HIT:
+			case HIT:
 				if (aniIndex <= GetSpriteAmount(enemyType, state) - 2)
 					pushBack(pushBackDir, lvlData, 2f);
 				updatePushBackDrawOffset();
@@ -64,20 +61,4 @@ public class Shark extends Enemy {
 		}
 	}
 
-	protected void attackMove(int[][] lvlData, Playing playing) {
-		float xSpeed = 0;
-
-		if (walkDir == LEFT)
-			xSpeed = -walkSpeed;
-		else
-			xSpeed = walkSpeed;
-
-		if (CanMoveHere(hitbox.x + xSpeed * 4, hitbox.y, hitbox.width, hitbox.height, lvlData))
-			if (IsFloor(hitbox, xSpeed * 4, lvlData)) {
-				hitbox.x += xSpeed * 4;
-				return;
-			}
-		newState(IDLE);
-		playing.addDialogue((int) hitbox.x, (int) hitbox.y, EXCLAMATION);
-	}
 }

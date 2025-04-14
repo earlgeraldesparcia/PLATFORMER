@@ -13,7 +13,7 @@ public class EnemyManager {
 	private int playerBasicAttackDamage = 10000;
 
 	private Playing playing;
-	private BufferedImage[][] crabbyArr, pinkstarArr, sharkArr, shroombieArr, bossArr;
+	private BufferedImage[][] crabbyArr, pinkstarArr, sharkArr, shroombieArr, frostGiantArr, bossArr;
 	private Level currentLevel;
 
 	public EnemyManager(Playing playing) {
@@ -27,19 +27,19 @@ public class EnemyManager {
 
 	public void update(int[][] lvlData) {
 		boolean isAnyActive = false;
-		for (Crabby c : currentLevel.getCrabs())
+		for (Duwende c : currentLevel.getCrabs())
 			if (c.isActive()) {
 				c.update(lvlData, playing);
 				isAnyActive = true;
 			}
 
-		for (Pinkstar p : currentLevel.getPinkstars())
+		for (Manananggal p : currentLevel.getPinkstars())
 			if (p.isActive()) {
 				p.update(lvlData, playing);
 				isAnyActive = true;
 			}
 
-		for (Shark s : currentLevel.getSharks())
+		for (Tikbalang s : currentLevel.getSharks())
 			if (s.isActive()) {
 				s.update(lvlData, playing);
 				isAnyActive = true;
@@ -48,6 +48,12 @@ public class EnemyManager {
 		for (Shroombie sh : currentLevel.getShroombie())
 			if (sh.isActive()) {
 				sh.update(lvlData, playing);
+				isAnyActive = true;
+			}
+		
+		for (Kapfrost f : currentLevel.getFrostGiant())
+			if (f.isActive()) {
+				f.update(lvlData, playing);
 				isAnyActive = true;
 			}
 		
@@ -65,6 +71,7 @@ public class EnemyManager {
 		drawCrabs(g, xLvlOffset);
 		drawPinkstars(g, xLvlOffset);
 		drawSharks(g, xLvlOffset);
+		drawFrostGiant(g, xLvlOffset);
 		drawShroombie(g, xLvlOffset);
 		drawBoss(g, xLvlOffset);
 	}
@@ -78,9 +85,19 @@ public class EnemyManager {
 //				s.drawAttackBox(g, xLvlOffset);
 			}
 	}
+	
+	private void drawFrostGiant(Graphics g, int xLvlOffset) {
+		for (Kapfrost f : currentLevel.getFrostGiant())
+			if (f.isActive()) {
+				g.drawImage(frostGiantArr[f.getState()][f.getAniIndex()], (int) f.getHitbox().x - xLvlOffset - FROST_GIANT_DRAWOFFSET_X + f.flipX(),
+						(int) f.getHitbox().y - FROST_GIANT_DRAWOFFSET_Y + (int) f.getPushDrawOffset(), FROST_GIANT_WIDTH * f.flipW(), FROST_GIANT_HEIGHT, null);
+//				s.drawHitbox(g, xLvlOffset);
+//				s.drawAttackBox(g, xLvlOffset);
+			}
+	}
 
 	private void drawSharks(Graphics g, int xLvlOffset) {
-		for (Shark s : currentLevel.getSharks())
+		for (Tikbalang s : currentLevel.getSharks())
 			if (s.isActive()) {
 				g.drawImage(sharkArr[s.getState()][s.getAniIndex()], (int) s.getHitbox().x - xLvlOffset - SHARK_DRAWOFFSET_X + s.flipX(),
 						(int) s.getHitbox().y - SHARK_DRAWOFFSET_Y + (int) s.getPushDrawOffset(), SHARK_WIDTH * s.flipW(), SHARK_HEIGHT, null);
@@ -90,7 +107,7 @@ public class EnemyManager {
 	}
 
 	private void drawPinkstars(Graphics g, int xLvlOffset) {
-		for (Pinkstar p : currentLevel.getPinkstars())
+		for (Manananggal p : currentLevel.getPinkstars())
 			if (p.isActive()) {
 				g.drawImage(pinkstarArr[p.getState()][p.getAniIndex()], (int) p.getHitbox().x - xLvlOffset - PINKSTAR_DRAWOFFSET_X + p.flipX(),
 						(int) p.getHitbox().y - PINKSTAR_DRAWOFFSET_Y + (int) p.getPushDrawOffset(), PINKSTAR_WIDTH * p.flipW(), PINKSTAR_HEIGHT, null);
@@ -99,7 +116,7 @@ public class EnemyManager {
 	}
 
 	private void drawCrabs(Graphics g, int xLvlOffset) {
-		for (Crabby c : currentLevel.getCrabs())
+		for (Duwende c : currentLevel.getCrabs())
 			if (c.isActive()) {
 
 				g.drawImage(crabbyArr[c.getState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - CRABBY_DRAWOFFSET_X + c.flipX(),
@@ -125,7 +142,7 @@ public class EnemyManager {
 	}
 
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
-		for (Crabby c : currentLevel.getCrabs())
+		for (Duwende c : currentLevel.getCrabs())
 			if (c.isActive())
 				if (c.getState() != DEAD && c.getState() != HIT)
 					if (attackBox.intersects(c.getHitbox())) {
@@ -133,7 +150,7 @@ public class EnemyManager {
 						return;
 					}
 
-		for (Pinkstar p : currentLevel.getPinkstars())
+		for (Manananggal p : currentLevel.getPinkstars())
 			if (p.isActive()) {
 				if (p.getState() == ATTACK && p.getAniIndex() >= 7)
 					return;
@@ -146,11 +163,20 @@ public class EnemyManager {
 				}
 			}
 
-		for (Shark s : currentLevel.getSharks())
+		for (Tikbalang s : currentLevel.getSharks())
 			if (s.isActive()) {
 				if (s.getState() != DEAD && s.getState() != HIT)
 					if (attackBox.intersects(s.getHitbox())) {
 						s.hurt(playerBasicAttackDamage);
+						return;
+					}
+			}
+		
+		for (Kapfrost f : currentLevel.getFrostGiant())
+			if (f.isActive()) {
+				if (f.getState() != DEAD && f.getState() != HIT)
+					if (attackBox.intersects(f.getHitbox())) {
+						f.hurt(playerBasicAttackDamage);
 						return;
 					}
 			}
@@ -179,6 +205,7 @@ public class EnemyManager {
 		pinkstarArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.PINKSTAR_ATLAS), 8, 5, PINKSTAR_WIDTH_DEFAULT, PINKSTAR_HEIGHT_DEFAULT);
 		sharkArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.SHARK_ATLAS), 9, 5, SHARK_WIDTH_DEFAULT, SHARK_HEIGHT_DEFAULT);
 		shroombieArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.SHROOMBIE_ATLAS), 8, 5, SHROOMBIE_WIDTH_DEFAULT, SHROOMBIE_HEIGHT_DEFAULT);
+		frostGiantArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.FROST_GIANT_ATLAS), 10, 5, FROST_GIANT_WIDTH_DEFAULT, FROST_GIANT_HEIGHT_DEFAULT);
 		bossArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.BOSS_ATLAS), 10, 5, BOSS_WIDTH_DEFAULT, BOSS_HEIGHT_DEFAULT);
 	}
 
@@ -191,12 +218,14 @@ public class EnemyManager {
 	}
 
 	public void resetAllEnemies() {
-		for (Crabby c : currentLevel.getCrabs())
+		for (Duwende c : currentLevel.getCrabs())
 			c.resetEnemy();
-		for (Pinkstar p : currentLevel.getPinkstars())
+		for (Manananggal p : currentLevel.getPinkstars())
 			p.resetEnemy();
-		for (Shark s : currentLevel.getSharks())
+		for (Tikbalang s : currentLevel.getSharks())
 			s.resetEnemy();
+		for (Kapfrost f : currentLevel.getFrostGiant())
+			f.resetEnemy();
 		for (Shroombie sh : currentLevel.getShroombie())
 			sh.resetEnemy();
 		for (Boss b : currentLevel.getBoss())

@@ -12,13 +12,14 @@ import java.awt.image.BufferedImage;
 
 import audio.AudioPlayer;
 import gamestates.Playing;
+import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
 
 public class Player extends Entity {
-	private int basicAttackDamage = 10000;
+	private int basicAttackDamage = 0;
 	
-	public int getBasicAttackDamage() { return this.basicAttackDamage; }
+	public int getBasicAttackDamage() { return this.basicAttackDamage + (10 * LevelManager.levelNumber); }
 
 	private BufferedImage[][] animations;
 	private boolean moving = false, attacking = false;
@@ -70,7 +71,7 @@ public class Player extends Entity {
 		super(x, y, width, height);
 		this.playing = playing;
 		this.state = IDLE;
-		this.maxHealth = 100;
+		this.maxHealth = 150 + (100 * LevelManager.levelNumber);
 		this.currentHealth = maxHealth;
 		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();

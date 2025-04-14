@@ -119,7 +119,7 @@ public abstract class Enemy extends Entity {
 		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		switch (enemyType) {
 		case CRABBY -> {
-			return absValue <= attackDistance;
+			return absValue <= attackDistance * 1/2;
 		}
 		case SHARK -> {
 			return absValue <= attackDistance * 2;
@@ -128,6 +128,9 @@ public abstract class Enemy extends Entity {
 			return absValue <= attackDistance * 1/2;
 		}
 		case SHROOMBIE -> {
+			return absValue <= attackDistance * 1/2;
+		}
+		case FROST_GIANT -> {
 			return absValue <= attackDistance * 1/2;
 		}
 		case BOSS -> {
@@ -168,7 +171,7 @@ public abstract class Enemy extends Entity {
 			aniTick = 0;
 			aniIndex++;
 			if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-				if (enemyType == CRABBY || enemyType == SHARK || enemyType == BOSS || enemyType == PINKSTAR || enemyType == SHROOMBIE) {
+				if (enemyType == CRABBY || enemyType == SHARK || enemyType == BOSS || enemyType == PINKSTAR || enemyType == SHROOMBIE || enemyType == FROST_GIANT) {
 					aniIndex = 0;
 
 					switch (state) {

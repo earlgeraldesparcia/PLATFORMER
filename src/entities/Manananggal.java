@@ -6,9 +6,9 @@ import static utilz.Constants.Dialogue.*;
 
 import gamestates.Playing;
 
-public class Pinkstar extends Enemy {
+public class Manananggal extends Enemy {
 
-	public Pinkstar(float x, float y) {
+	public Manananggal(float x, float y) {
 		super(x, y, PINKSTAR_WIDTH, PINKSTAR_HEIGHT, PINKSTAR);
 		initHitbox(18, 19);
 		initAttackBox(18, 15, 0);

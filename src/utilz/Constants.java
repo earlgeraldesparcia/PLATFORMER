@@ -136,7 +136,8 @@ public class Constants {
 		public static final int PINKSTAR = 1; //manananggal
 		public static final int SHARK = 2; //minotaur
 		public static final int SHROOMBIE = 3; //shroombie
-		public static final int BOSS = 4; //Corruption Khaimon
+		public static final int FROST_GIANT = 4;
+		public static final int BOSS = 5; //Corruption Khaimon
 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
@@ -172,6 +173,13 @@ public class Constants {
 		public static final int SHROOMBIE_DRAWOFFSET_X = (int) (40 * Game.SCALE);//edited
 		public static final int SHROOMBIE_DRAWOFFSET_Y = (int) (40 * Game.SCALE);//edited
 		
+		public static final int FROST_GIANT_WIDTH_DEFAULT = 192; //edited
+		public static final int FROST_GIANT_HEIGHT_DEFAULT = 128;//edited
+		public static final int FROST_GIANT_WIDTH = (int) (SHARK_WIDTH_DEFAULT * Game.SCALE);
+		public static final int FROST_GIANT_HEIGHT = (int) (SHARK_HEIGHT_DEFAULT * Game.SCALE);
+		public static final int FROST_GIANT_DRAWOFFSET_X = (int) (35 * Game.SCALE);//edited
+		public static final int FROST_GIANT_DRAWOFFSET_Y = (int) (50 * Game.SCALE);//edited
+		
 		public static final int BOSS_WIDTH_DEFAULT = 288;
 		public static final int BOSS_HEIGHT_DEFAULT = 160;
 		public static final int BOSS_WIDTH = (int) (BOSS_WIDTH_DEFAULT * Game.SCALE);
@@ -191,7 +199,7 @@ public class Constants {
 					return 5;
 				else if (enemy_type == SHROOMBIE)
 					return 4;
-				else if (enemy_type == BOSS)
+				else if (enemy_type == BOSS || enemy_type == FROST_GIANT)
 					return 6;
 			}
 			case RUNNING:
@@ -199,7 +207,7 @@ public class Constants {
 					return 8;
 				else if(enemy_type == BOSS)
 					return 10;
-				else if(enemy_type == CRABBY || enemy_type == PINKSTAR || enemy_type == SHROOMBIE)
+				else if(enemy_type == CRABBY || enemy_type == PINKSTAR || enemy_type == SHROOMBIE || enemy_type == FROST_GIANT)
 					return 8;
 				else
 					return 6;
@@ -208,7 +216,7 @@ public class Constants {
 					return 9;
 				else if (enemy_type == BOSS)
 					return 9;
-				else if (enemy_type == PINKSTAR || enemy_type == SHROOMBIE)
+				else if (enemy_type == PINKSTAR || enemy_type == SHROOMBIE || enemy_type == FROST_GIANT)
 					return 8;
 				else
 					return 7;
@@ -217,10 +225,12 @@ public class Constants {
 					return 3;
 				else if (enemy_type == BOSS)
 					return 5;
+				else if (enemy_type == FROST_GIANT)
+					return 7;
 				else
 					return 4;
 			case DEAD:
-				if(enemy_type == BOSS)
+				if(enemy_type == BOSS || enemy_type == FROST_GIANT)
 					return 10;
 				else if(enemy_type == CRABBY)
 					return 7;
@@ -237,15 +247,17 @@ public class Constants {
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
 			case CRABBY:
-				return 50;
+				return 25;
 			case PINKSTAR:
 				return 75;
 			case SHARK: //edited
 				return 100;
 			case SHROOMBIE:
-				return 120;
+				return 50;
+			case FROST_GIANT:
+				return 100;
 			case BOSS:
-				return 300;
+				return 500;
 			default:
 				return 1;
 			}
@@ -254,15 +266,17 @@ public class Constants {
 		public static int GetEnemyDmg(int enemy_type) {
 			switch (enemy_type) {
 			case CRABBY:
-				return 15;
+				return 5;
 			case PINKSTAR:
-				return 20;
-			case SHARK:
-				return 25;
-			case SHROOMBIE:
 				return 30;
-			case BOSS:
+			case SHARK:
 				return 50;
+			case SHROOMBIE:
+				return 10;
+			case FROST_GIANT:
+				return 70;
+			case BOSS:
+				return 300;
 			default:
 				return 0;
 			}

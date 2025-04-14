@@ -6,12 +6,12 @@ import static utilz.Constants.Dialogue.*;
 
 import gamestates.Playing;
 
-public class Crabby extends Enemy {
+public class Kapfrost extends Enemy {
 
-	public Crabby(float x, float y) {
-		super(x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
-		initHitbox(18, 19);
-		initAttackBox(18, 19, 5);
+	public Kapfrost(float x, float y) {
+		super(x, y, FROST_GIANT_WIDTH, FROST_GIANT_HEIGHT, FROST_GIANT);
+		initHitbox(25, 30);
+		initAttackBox(50, 30, 0);
 	}
 
 	public void update(int[][] lvlData, Playing playing) {
@@ -49,7 +49,7 @@ public class Crabby extends Enemy {
 			case ATTACK:
 				if (aniIndex == 0)
 					attackChecked = false;
-				if (aniIndex == 3 && !attackChecked)
+				if (aniIndex == 4 && !attackChecked)
 					checkPlayerHit(attackBox, playing.getPlayer());
 				break;
 			case HIT:

@@ -11,6 +11,7 @@ public class State {
 	protected Game game;
 	
 	protected int storyIndex1 = 1;
+	protected boolean nextStory = false;
 
 	public State(Game game) {
 		this.game = game;

@@ -6,9 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entities.Boss;
-import entities.Crabby;
-import entities.Pinkstar;
-import entities.Shark;
+import entities.Duwende;
+import entities.Kapfrost;
+import entities.Manananggal;
+import entities.Tikbalang;
 import entities.Shroombie;
 import main.Game;
 import objects.BackgroundTree;
@@ -26,9 +27,10 @@ public class Level {
 	private BufferedImage img;
 	private int[][] lvlData;
 
-	private ArrayList<Crabby> crabs = new ArrayList<>();
-	private ArrayList<Pinkstar> pinkstars = new ArrayList<>();
-	private ArrayList<Shark> sharks = new ArrayList<>();
+	private ArrayList<Duwende> crabs = new ArrayList<>();
+	private ArrayList<Manananggal> pinkstars = new ArrayList<>();
+	private ArrayList<Tikbalang> sharks = new ArrayList<>();
+	private ArrayList<Kapfrost> frostgiants = new ArrayList<>();
 	private ArrayList<Shroombie> shroombies = new ArrayList<>();
 	private ArrayList<Boss> boss = new ArrayList<>();
 	private ArrayList<Potion> potions = new ArrayList<>();
@@ -86,9 +88,10 @@ public class Level {
 
 	private void loadEntities(int greenValue, int x, int y) {
 		switch (greenValue) {
-		case CRABBY -> crabs.add(new Crabby(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-		case PINKSTAR -> pinkstars.add(new Pinkstar(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-		case SHARK -> sharks.add(new Shark(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case CRABBY -> crabs.add(new Duwende(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case PINKSTAR -> pinkstars.add(new Manananggal(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case SHARK -> sharks.add(new Tikbalang(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case FROST_GIANT -> frostgiants.add(new Kapfrost(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 		case SHROOMBIE -> shroombies.add(new Shroombie(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 		case BOSS -> boss.add(new Boss(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 		case 100 -> playerSpawn = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
@@ -127,12 +130,16 @@ public class Level {
 		return playerSpawn;
 	}
 
-	public ArrayList<Crabby> getCrabs() {
+	public ArrayList<Duwende> getCrabs() {
 		return crabs;
 	}
 
-	public ArrayList<Shark> getSharks() {
+	public ArrayList<Tikbalang> getSharks() {
 		return sharks;
+	}
+	
+	public ArrayList<Kapfrost> getFrostGiant() {
+		return frostgiants;
 	}
 	
 	public ArrayList<Shroombie> getShroombie() {
@@ -159,7 +166,7 @@ public class Level {
 		return cannons;
 	}
 
-	public ArrayList<Pinkstar> getPinkstars() {
+	public ArrayList<Manananggal> getPinkstars() {
 		return pinkstars;
 	}
 

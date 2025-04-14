@@ -20,7 +20,9 @@ public class LoadSave {
 	public static final String URM_BUTTONS = "urm_buttons1.png";
 	public static final String VOLUME_BUTTONS = "volume_buttons1.png";
 	public static final String MENU_BACKGROUND_IMG = "background_menu1.png";
-	public static final String PLAYING_BG_IMG = "World1.png";
+	public static final String PLAYING_BG_IMG1 = "World1.png";
+	public static final String PLAYING_BG_IMG2 = "World2.png";
+	public static final String PLAYING_BG_IMG3 = "World3.png";
 	public static final String BIG_CLOUDS = "big_clouds.png";
 	public static final String SMALL_CLOUDS = "small_clouds.png";
 	public static final String CRABBY_SPRITE = "dwarfsprites.png";
@@ -38,6 +40,7 @@ public class LoadSave {
 	public static final String QUESTION_ATLAS = "question_atlas.png";
 	public static final String EXCLAMATION_ATLAS = "exclamation_atlas.png";
 	public static final String SHARK_ATLAS = "minotaur.png"; //edited
+	public static final String FROST_GIANT_ATLAS = "frostgiant.png";
 	public static final String BOSS_ATLAS = "boss.png";
 	public static final String CREDITS = "credits_list1.png";
 	public static final String GRASS_ATLAS = "grass_atlas.png";
@@ -48,8 +51,6 @@ public class LoadSave {
 	public static final String WATER_TOP = "water_atlas_animation.png";
 	public static final String WATER_BOTTOM = "water.png";
 	public static final String SHIP = "ship.png";
-	
-	public static final String WORLD1_STORY_1 = "";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
