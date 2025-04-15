@@ -81,9 +81,9 @@ public class WorldTwoStory {
 	
 	public void enterPressed() {
 		nextStory();
-		if(getStoryIndex2() > 3) {
-			playing.showStory(false);
+		if(getStoryIndex2() > 5) {
 			storyIndex2 = 1;
+			playing.showStory2(false);
 		}
 	}
 	
@@ -96,10 +96,18 @@ public class WorldTwoStory {
 			backgroundImg = GetSpriteAtlas(story2);
 		}else if(storyIndex2 == 3) {
 			backgroundImg = GetSpriteAtlas(story3);
+		}else if(storyIndex2 == 4) {
+			backgroundImg = GetSpriteAtlas(story4);
+		}else if(storyIndex2 == 5) {
+			backgroundImg = GetSpriteAtlas(story5);
 		}
 	}
 	
 	public int getStoryIndex2() {
 		return storyIndex2;
+	}
+	
+	public void resetStoryIndex2() {
+		storyIndex2 = 1;
 	}
 }

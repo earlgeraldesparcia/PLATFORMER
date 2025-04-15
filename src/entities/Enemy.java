@@ -119,7 +119,7 @@ public abstract class Enemy extends Entity {
 		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		switch (enemyType) {
 		case CRABBY -> {
-			return absValue <= attackDistance * 1/2;
+			return absValue <= attackDistance/2;
 		}
 		case SHARK -> {
 			return absValue <= attackDistance * 2;
@@ -134,7 +134,7 @@ public abstract class Enemy extends Entity {
 			return absValue <= attackDistance * 1/2;
 		}
 		case BOSS -> {
-			return absValue <= attackDistance;
+			return absValue <= attackDistance/2;
 		}
 		}
 		return false;

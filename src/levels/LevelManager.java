@@ -40,7 +40,6 @@ public class LevelManager {
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
 		levelNumber++;
-		System.out.println(levelNumber);
 	}
 
 	private void buildAllLevels() {

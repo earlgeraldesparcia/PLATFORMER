@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,18 +12,19 @@ import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
 
-public class WorldOneStory {
+public class EndingStory {
 
 	private Playing playing;
 	private BufferedImage backgroundImg;
 	private int bgX, bgY, bgW, bgH;
 	
-	private int storyIndex1 = 1;
-	private String story1 = "world1dialog1.png";
-	private String story2 = "world1dialog2.png";
-	private String story3 = "world1dialog3.png";
+	private int endingIndex = 1;
+	private boolean exitEndingStory = false;
+	private String story1 = "endingdialog1.png";
+	private String story2 = "endingdialog2.png";
+	private String story3 = "endingdialog3.png";
 
-	public WorldOneStory(Playing playing) {
+	public EndingStory(Playing playing) {
 		this.playing = playing;
 		loadBackground();
 	}
@@ -79,29 +79,34 @@ public class WorldOneStory {
 	
 	public void enterPressed() {
 		nextStory();
-		if(getStoryIndex1() > 3) {
-			storyIndex1 = 1;
-			playing.showStory1(false);
+		if(getStoryIndex3() > 3) {
+			endingIndex = 1;
+			playing.showEnding(false);
+			exitEndingStory = true;
 		}
 	}
 	
 	public void nextStory() {
-		storyIndex1++;
+		endingIndex++;
 		
-		if(storyIndex1 == 1) {
+		if(endingIndex == 1) {
 			backgroundImg = GetSpriteAtlas(story1);
-		}else if(storyIndex1 == 2) {
+		}else if(endingIndex == 2) {
 			backgroundImg = GetSpriteAtlas(story2);
-		}else if(storyIndex1 == 3) {
+		}else if(endingIndex == 3) {
 			backgroundImg = GetSpriteAtlas(story3);
 		}
 	}
 	
-	public int getStoryIndex1() {
-		return storyIndex1;
+	public int getStoryIndex3() {
+		return endingIndex;
 	}
 	
-	public void resetStoryIndex1() {
-		storyIndex1 = 1;
+	public void resetStoryIndex2() {
+		endingIndex = 1;
+	}
+	
+	public boolean exitEndingStory() {
+		return exitEndingStory;
 	}
 }

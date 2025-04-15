@@ -14,11 +14,14 @@ import entities.Player;
 import levels.LevelManager;
 import main.Game;
 import objects.ObjectManager;
+import ui.EndingStory;
 import ui.GameCompletedOverlay;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import ui.WorldOneStory;
+import ui.WorldThreeStory;
+import ui.WorldTwoStory;
 import utilz.LoadSave;
 import effects.DialogueEffect;
 import effects.Rain;
@@ -39,8 +42,14 @@ public class Playing extends State implements Statemethods {
 	private Rain rain;
 	
 	private WorldOneStory worldOneStory;
+	private WorldTwoStory worldTwoStory;
+	private WorldThreeStory worldThreeStory;
+	private EndingStory endingStory;
 
 	private boolean showStory1 = true;//
+	private boolean showStory2 = false;
+	private boolean showStory3 = false;
+	private boolean showEnding = false;
 	private boolean paused = false;
 
 	private int xLvlOffset;
@@ -71,7 +80,7 @@ public class Playing extends State implements Statemethods {
 	// you want
 	// it.
 
-	private boolean drawShip = true;
+	private boolean drawShip = false;
 	private int shipAni, shipTick, shipDir = 1;
 	private float shipHeightDelta, shipHeightChange = 0.05f * Game.SCALE;
 
@@ -132,7 +141,16 @@ public class Playing extends State implements Statemethods {
 		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
 		resetAll();
 		drawShip = false;
-		nextBackgroundImage();
+		
+		if(LevelManager.levelNumber == 2) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG2);
+			showStory2 = true;
+		}
+		if(LevelManager.levelNumber == 3) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG3);
+			showStory3 = true;
+		}
+		
 	}
 
 	private void loadStartLevel() {
@@ -159,6 +177,9 @@ public class Playing extends State implements Statemethods {
 		gameCompletedOverlay = new GameCompletedOverlay(this);
 		
 		worldOneStory = new WorldOneStory(this);
+		worldTwoStory = new WorldTwoStory(this);
+		worldThreeStory = new WorldThreeStory(this);
+		endingStory = new EndingStory(this);
 
 		rain = new Rain();
 	}
@@ -173,7 +194,10 @@ public class Playing extends State implements Statemethods {
 			levelCompletedOverlay.update();
 		}
 		else if (gameCompleted) {
-			gameCompletedOverlay.update();
+			endingStory.update();
+			if(endingStory.exitEndingStory()) {
+				gameCompletedOverlay.update();
+			}
 		}
 		else if (gameOver) {
 			gameOverOverlay.update();
@@ -183,6 +207,12 @@ public class Playing extends State implements Statemethods {
 		}
 		else if(showStory1) {
 			worldOneStory.update();
+		}
+		else if(showStory2) {
+			worldTwoStory.update();
+		}
+		else if(showStory3) {
+			worldThreeStory.update();
 		}
 		
 		else {
@@ -197,17 +227,6 @@ public class Playing extends State implements Statemethods {
 			if (drawShip)
 				updateShipAni();
 		}
-	}
-
-	private void nextBackgroundImage() {
-		if(LevelManager.levelNumber == 1) {
-			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG1);
-		}else if(LevelManager.levelNumber == 2) {
-			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG2);
-		}else if(LevelManager.levelNumber == 3) {
-			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG3);
-		}
-		
 	}
 
 	private void updateShipAni() {
@@ -294,22 +313,31 @@ public class Playing extends State implements Statemethods {
 			gameOverOverlay.draw(g);
 		else if (lvlCompleted)
 			levelCompletedOverlay.draw(g);
-		else if (gameCompleted)
-			gameCompletedOverlay.draw(g);
-		
+		else if (gameCompleted) {
+			endingStory.draw(g);
+			if(endingStory.exitEndingStory()) {
+				gameCompletedOverlay.draw(g);
+			}
+		}
 		else if(showStory1) {
 			worldOneStory.draw(g);
+		}
+		else if(showStory2) {
+			worldTwoStory.draw(g);
+		}
+		else if(showStory3) {
+			worldThreeStory.draw(g);
 		}
 
 	}
 
-	private void drawClouds(Graphics g) {
-		for (int i = 0; i < 4; i++)
-			g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
-
-		for (int i = 0; i < smallCloudsPos.length; i++)
-			g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
-	}
+//	private void drawClouds(Graphics g) {
+//		for (int i = 0; i < 4; i++)
+//			g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
+//
+//		for (int i = 0; i < smallCloudsPos.length; i++)
+//			g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+//	}
 
 	public void setGameCompleted() {
 		gameCompleted = true;
@@ -372,7 +400,7 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!gameOver && !gameCompleted && !lvlCompleted)
+		if (!gameOver && !gameCompleted && !lvlCompleted) {
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_A:
 				player.setLeft(true);
@@ -393,9 +421,24 @@ public class Playing extends State implements Statemethods {
 				player.powerAttack();
 				break;
 			case KeyEvent.VK_ENTER:
-				worldOneStory.enterPressed();;
+				if(showStory1) {
+					worldOneStory.enterPressed();
+				}
+				if(showStory2) {
+					worldTwoStory.enterPressed();
+				}
+				if(showStory3) {
+					worldThreeStory.enterPressed();
+				}
 				break;
 			}
+		} else {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_ENTER:
+				endingStory.enterPressed();
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -416,8 +459,7 @@ public class Playing extends State implements Statemethods {
 				break;
 			case KeyEvent.VK_K:
 				break;
-			
-			}
+		}
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -508,7 +550,19 @@ public class Playing extends State implements Statemethods {
 		this.playerDying = playerDying;
 	}
 	
-	public void showStory(boolean value) {
+	public void showStory1(boolean value) {
 		showStory1 = value;
+	}
+	
+	public void showStory2(boolean value) {
+		showStory2 = value;
+	}
+	
+	public void showStory3(boolean value) {
+		showStory3 = value;
+	}
+	
+	public void showEnding(boolean value) {
+		showEnding = value;
 	}
 }

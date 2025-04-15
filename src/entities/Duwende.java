@@ -11,7 +11,7 @@ public class Duwende extends Enemy {
 	public Duwende(float x, float y) {
 		super(x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
 		initHitbox(18, 19);
-		initAttackBox(CRABBY_WIDTH/2, 19, 0);
+		initAttackBox(20, 19, 1);
 	}
 
 	public void update(int[][] lvlData, Playing playing) {

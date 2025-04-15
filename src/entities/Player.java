@@ -17,15 +17,26 @@ import main.Game;
 import utilz.LoadSave;
 
 public class Player extends Entity {
-	private int basicAttackDamage = 0;
+	private static int basicAttackDamage = 5;
 	
-	public int getBasicAttackDamage() { return this.basicAttackDamage + (10 * LevelManager.levelNumber); }
+	public static int getBasicAttackDamage() { 
+		if(LevelManager.levelNumber == 1) {
+			basicAttackDamage = 5;
+		}
+		else if(LevelManager.levelNumber == 2) {
+			basicAttackDamage = 15;
+		}
+		else if(LevelManager.levelNumber == 3) {
+			basicAttackDamage = 25;
+		}
+		return basicAttackDamage + (5 * LevelManager.levelNumber); 
+	}
 
 	private BufferedImage[][] animations;
 	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int[][] lvlData;
-	private float xDrawOffset = 21 * Game.SCALE;
+	private float xDrawOffset = 27 * Game.SCALE;
 	private float yDrawOffset = 11 * Game.SCALE;
 
 	// Jumping / Gravity
@@ -75,7 +86,7 @@ public class Player extends Entity {
 		this.currentHealth = maxHealth;
 		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();
-		initHitbox(20, 27);
+		initHitbox(5, 27);
 		initAttackBox();
 	}
 
@@ -87,7 +98,7 @@ public class Player extends Entity {
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (40 * Game.SCALE), (int) (20 * Game.SCALE));
 		resetAttackBox();
 	}
 
@@ -185,11 +196,11 @@ public class Player extends Entity {
 	}
 
 	private void setAttackBoxOnRightSide() {
-		attackBox.x = hitbox.x + hitbox.width - (int) (Game.SCALE * 5);
+		attackBox.x = hitbox.x + hitbox.width - (int) (Game.SCALE);
 	}
 
 	private void setAttackBoxOnLeftSide() {
-		attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 10);
+		attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 30);
 	}
 
 	private void updateAttackBox() {

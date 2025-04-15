@@ -11,7 +11,7 @@ public class Boss extends Enemy {
 	public Boss(float x, float y) {
 		super(x, y, BOSS_WIDTH, BOSS_HEIGHT, BOSS);
 		initHitbox(25, 30);
-		initAttackBox(100, 100, 0);
+		initAttackBox(75, 75, 0);
 	}
 
 	public void update(int[][] lvlData, Playing playing) {

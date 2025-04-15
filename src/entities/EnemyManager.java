@@ -10,7 +10,7 @@ import utilz.LoadSave;
 import static utilz.Constants.EnemyConstants.*;
 
 public class EnemyManager {
-	private int playerBasicAttackDamage = 10000;
+	private int playerBasicAttackDamage = Player.getBasicAttackDamage();
 
 	private Playing playing;
 	private BufferedImage[][] crabbyArr, pinkstarArr, sharkArr, shroombieArr, frostGiantArr, bossArr;

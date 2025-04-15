@@ -132,11 +132,11 @@ public class Constants {
 	}
 
 	public static class EnemyConstants {
-		public static final int CRABBY = 0; //dwarf
+		public static final int CRABBY = 0; //duwende
 		public static final int PINKSTAR = 1; //manananggal
-		public static final int SHARK = 2; //minotaur
+		public static final int SHARK = 2; //tikbalang
 		public static final int SHROOMBIE = 3; //shroombie
-		public static final int FROST_GIANT = 4;
+		public static final int FROST_GIANT = 4;//Kapfrost
 		public static final int BOSS = 5; //Corruption Khaimon
 
 		public static final int IDLE = 0;
@@ -257,7 +257,7 @@ public class Constants {
 			case FROST_GIANT:
 				return 100;
 			case BOSS:
-				return 500;
+				return 300;
 			default:
 				return 1;
 			}
@@ -276,7 +276,7 @@ public class Constants {
 			case FROST_GIANT:
 				return 70;
 			case BOSS:
-				return 300;
+				return 100;
 			default:
 				return 0;
 			}

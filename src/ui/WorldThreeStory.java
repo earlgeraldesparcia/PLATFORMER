@@ -13,18 +13,20 @@ import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
 
-public class WorldOneStory {
+public class WorldThreeStory {
 
 	private Playing playing;
 	private BufferedImage backgroundImg;
 	private int bgX, bgY, bgW, bgH;
 	
-	private int storyIndex1 = 1;
-	private String story1 = "world1dialog1.png";
-	private String story2 = "world1dialog2.png";
-	private String story3 = "world1dialog3.png";
+	private int storyIndex3 = 1;
+	private String story1 = "world3dialog1.png";
+	private String story2 = "world3dialog2.png";
+	private String story3 = "world3dialog3.png";
+	private String story4 = "world3dialog4.png";
+	private String story5 = "world3dialog5.png";
 
-	public WorldOneStory(Playing playing) {
+	public WorldThreeStory(Playing playing) {
 		this.playing = playing;
 		loadBackground();
 	}
@@ -79,29 +81,33 @@ public class WorldOneStory {
 	
 	public void enterPressed() {
 		nextStory();
-		if(getStoryIndex1() > 3) {
-			storyIndex1 = 1;
-			playing.showStory1(false);
+		if(getStoryIndex3() > 5) {
+			storyIndex3 = 1;
+			playing.showStory3(false);
 		}
 	}
 	
 	public void nextStory() {
-		storyIndex1++;
+		storyIndex3++;
 		
-		if(storyIndex1 == 1) {
+		if(storyIndex3 == 1) {
 			backgroundImg = GetSpriteAtlas(story1);
-		}else if(storyIndex1 == 2) {
+		}else if(storyIndex3 == 2) {
 			backgroundImg = GetSpriteAtlas(story2);
-		}else if(storyIndex1 == 3) {
+		}else if(storyIndex3 == 3) {
 			backgroundImg = GetSpriteAtlas(story3);
+		}else if(storyIndex3 == 4) {
+			backgroundImg = GetSpriteAtlas(story4);
+		}else if(storyIndex3 == 5) {
+			backgroundImg = GetSpriteAtlas(story5);
 		}
 	}
 	
-	public int getStoryIndex1() {
-		return storyIndex1;
+	public int getStoryIndex3() {
+		return storyIndex3;
 	}
 	
-	public void resetStoryIndex1() {
-		storyIndex1 = 1;
+	public void resetStoryIndex2() {
+		storyIndex3 = 1;
 	}
 }
